@@ -134,6 +134,10 @@ export default function Subscribe() {
           >
             <p className="text-muted-foreground">{t('المبلغ المدفوع', 'Amount Paid')}</p>
             <p className="font-display text-2xl font-bold gold-text">{finalPrice} {t('ريال/شهر', 'SAR/month')}</p>
+            {pkg.priceUsd != null && pkg.price > 0 && (
+              <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ $ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+            )}
+
           </div>
           <button onClick={() => navigate('/dashboard')} className="btn-primary w-full py-3.5 text-base">
             {t('الذهاب إلى حسابي', 'Go to My Account')}
@@ -228,7 +232,9 @@ export default function Subscribe() {
                       </div>
                       <p className="font-display text-2xl font-bold gold-text mb-3">
                         {item.price} {t('ريال', 'SAR')}
+                        {item.priceUsd != null && <span className="text-sm font-semibold text-muted-foreground" dir="ltr"> ≈ ${item.priceUsd}</span>}
                       </p>
+
                       <ul className="flex flex-col gap-1.5">
                         {(language === 'ar' ? item.featuresAr : item.featuresEn).slice(0, 4).map(f => (
                           <li key={f} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -710,7 +716,14 @@ export default function Subscribe() {
                   <span>{t('الإجمالي', 'Total')}</span>
                   <span className="gold-text font-display text-xl">{finalPrice} {t('ر', 'SAR')}</span>
                 </div>
+                {pkg.priceUsd != null && pkg.price > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">{t('الإجمالي بالدولار', 'Total in USD')}</span>
+                    <span dir="ltr" className="font-semibold">$ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</span>
+                  </div>
+                )}
                 <p className="text-xs text-muted-foreground text-center">{t('شهرياً', 'per month')}</p>
+
               </div>
 
               {/* Trust badges */}

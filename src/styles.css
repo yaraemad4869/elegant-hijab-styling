@@ -855,8 +855,8 @@ select option {
     color: var(--primary-foreground);
     font-size: 0.75rem;
     font-weight: 900;
-    background: var(--primary);
-    border-radius: 0 0 0.75rem 0.75rem;
+    background: var(--accent);
+
     transform: translateX(-50%);
 }
 

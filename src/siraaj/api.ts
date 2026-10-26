@@ -253,12 +253,34 @@ export function mapUser(u: ApiUser): User {
   }
 }
 
+// ── سعر الباقة بالدولار (يُحفظ محلياً لعدم وجوده في الـ backend) ─────────────
+const USD_PRICES_KEY = 'siraj_package_usd_prices'
+
+export function loadUsdPrices(): Record<string, number> {
+  try {
+    const raw = localStorage.getItem(USD_PRICES_KEY)
+    return raw ? (JSON.parse(raw) as Record<string, number>) : {}
+  } catch { return {} }
+}
+
+export function saveUsdPrice(id: string, usd?: number) {
+  try {
+    const all = loadUsdPrices()
+    if (usd == null || Number.isNaN(usd)) delete all[id]
+    else all[id] = usd
+    localStorage.setItem(USD_PRICES_KEY, JSON.stringify(all))
+  } catch { /* ignore */ }
+}
+
 export function mapPackage(p: ApiPackage): Package {
+
   return {
     id: p.id,
     nameAr: p.nameAr,
     nameEn: p.nameEn,
     price: p.price,
+    priceUsd: loadUsdPrices()[p.id],
+
     originalPrice: p.originalPrice ?? undefined,
     sessions: p.sessions,
     sessionsPerWeek: p.sessionsPerWeek,
@@ -276,6 +298,8 @@ export function toPackageRequest(p: Package) {
     nameAr: p.nameAr,
     nameEn: p.nameEn || p.nameAr,
     price: Math.round(p.price),
+    priceUsd: p.priceUsd ?? 0,
+
     originalPrice: p.originalPrice ? Math.round(p.originalPrice) : 0,
     sessions: p.sessions,
     sessionsPerWeek: p.sessionsPerWeek,

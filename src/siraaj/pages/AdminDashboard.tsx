@@ -38,6 +38,8 @@ function PackageModal({ initial, onSave, onClose, lang }: {
     nameAr: initial?.nameAr || '',
     nameEn: initial?.nameEn || '',
     price: initial?.price || 0,
+    priceUsd: initial?.priceUsd,
+
     originalPrice: initial?.originalPrice,
     sessions: initial?.sessions || 8,
     sessionsPerWeek: initial?.sessionsPerWeek || 2,
@@ -84,6 +86,10 @@ function PackageModal({ initial, onSave, onClose, lang }: {
           <Field label={t('السعر الأصلي (اختياري)', 'Original Price (optional)')}>
             <input type="number" value={form.originalPrice || ''} onChange={e => setForm(f => ({ ...f, originalPrice: e.target.value ? +e.target.value : undefined }))} className={inputCls()} min={0} placeholder={t('اتركه فارغاً إذا لا يوجد', 'Leave empty if none')} />
           </Field>
+          <Field label={t('السعر بالدولار (اختياري)', 'Price in USD (optional)')}>
+            <input type="number" value={form.priceUsd ?? ''} onChange={e => setForm(f => ({ ...f, priceUsd: e.target.value ? +e.target.value : undefined }))} className={inputCls()} min={0} step="0.01" placeholder={t('مثال: 120', 'e.g. 120')} />
+          </Field>
+
           <Field label={t('عدد الحصص الشهرية', 'Monthly Sessions')}>
             <input type="number" value={form.sessions} onChange={e => setForm(f => ({ ...f, sessions: +e.target.value }))} className={inputCls()} min={1} />
           </Field>

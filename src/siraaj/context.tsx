@@ -4,7 +4,7 @@ import { DEFAULT_SITE_CONTENT } from './data'
 import {
   api, ApiError, tokenStore,
   mapUser, mapPackage, mapProgram, mapTeacher, mapFamilyDiscount, mapFeature, mapStudent,
-  toPackageRequest, toProgramRequest,
+  toPackageRequest, toProgramRequest, saveUsdPrice,
   type AdminStudent,
 } from './api'
 
@@ -269,8 +269,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const addPackage = async (pkg: Package) => {
     const created = await api.packages.create(toPackageRequest(pkg))
-    setSiteContent(c => ({ ...c, packages: [...c.packages, mapPackage(created)] }))
+    saveUsdPrice(created.id, pkg.priceUsd)
+    setSiteContent(c => ({ ...c, packages: [...c.packages, { ...mapPackage(created), priceUsd: pkg.priceUsd }] }))
   }
+
 
   const rememberInactive = (pkg: Package | null, removeId?: string) => {
     const list = loadFromStorage<Package[]>(INACTIVE_PACKAGES_KEY, [])
@@ -280,8 +282,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const updatePackage = async (pkg: Package) => {
+    saveUsdPrice(pkg.id, pkg.priceUsd)
     const updated = await api.packages.update(pkg.id, toPackageRequest(pkg))
-    const mapped = updated ? { ...mapPackage(updated), active: pkg.active !== false } : pkg
+    const mapped = updated ? { ...mapPackage(updated), active: pkg.active !== false, priceUsd: pkg.priceUsd } : pkg
+
     // نحفظ نسخة محلية من الباقات غير النشطة حتى تظل ظاهرة في لوحة الإدارة فقط
     rememberInactive(pkg.active === false ? mapped : null, pkg.id)
     setSiteContent(c => ({ ...c, packages: c.packages.map(p => (p.id === pkg.id ? mapped : p)) }))

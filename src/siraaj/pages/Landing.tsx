@@ -129,6 +129,10 @@ export default function Landing() {
                   <div className="mt-7 border-b border-border pb-7">
                     {pkg.originalPrice && <p className="text-sm text-muted-foreground line-through">{pkg.originalPrice} {t('ريال', 'SAR')}</p>}
                     <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary">{pkg.price}</strong><span className="pb-1 text-sm text-muted-foreground">{t('ريال / شهر', 'SAR / month')}</span></div>
+                    {pkg.priceUsd != null && (
+                      <p className="mt-1 text-sm text-muted-foreground">{t('أو', 'or')} <strong className="text-foreground" dir="ltr">$ {pkg.priceUsd}</strong> {t('دولار / شهر', 'USD / month')}</p>
+                    )}
+
                     <p className="mt-2 text-sm font-semibold text-foreground">{pkg.sessions} {t('حصة شهرياً', 'sessions monthly')}</p>
                   </div>
                   <ul className="my-7 flex-1 space-y-3">

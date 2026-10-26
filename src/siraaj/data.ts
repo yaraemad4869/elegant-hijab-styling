@@ -8,6 +8,8 @@ export const DEFAULT_PACKAGES: Package[] = [
     nameAr: 'الأساسية',
     nameEn: 'Basic',
     price: 360,
+    priceUsd: 96,
+
     sessions: 8,
     sessionsPerWeek: 2,
     color: '#F45B06',
@@ -33,7 +35,9 @@ export const DEFAULT_PACKAGES: Package[] = [
     nameAr: 'المميزة',
     nameEn: 'Premium',
     price: 450,
+    priceUsd: 120,
     originalPrice: 540,
+
     sessions: 12,
     sessionsPerWeek: 3,
     color: '#44C3C6',
@@ -61,7 +65,9 @@ export const DEFAULT_PACKAGES: Package[] = [
     nameAr: 'VIP',
     nameEn: 'VIP',
     price: 750,
+    priceUsd: 200,
     originalPrice: 900,
+
     sessions: 20,
     sessionsPerWeek: 5,
     color: '#7C3AED',

@@ -7,6 +7,8 @@ export interface Package {
   nameAr: string
   nameEn: string
   price: number
+  priceUsd?: number
+
   originalPrice?: number
   sessions: number
   sessionsPerWeek: number
