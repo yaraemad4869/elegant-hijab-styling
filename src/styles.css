@@ -856,6 +856,8 @@ select option {
     font-size: 0.75rem;
     font-weight: 900;
     background: var(--accent);
+    border-radius: 0 0 0.75rem 0.75rem;
+
 
     transform: translateX(-50%);
 }
