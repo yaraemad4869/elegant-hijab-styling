@@ -14,9 +14,11 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as TeacherRouteImport } from './routes/teacher'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RegisterIndexRouteImport } from './routes/register.index'
 import { Route as RegisterChildRouteImport } from './routes/register.child'
 import { Route as ApiPublicBackendSplatRouteImport } from './routes/api/public/backend/$'
@@ -46,6 +48,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -59,6 +66,11 @@ const SubscribeRoute = SubscribeRouteImport.update({
 const TeacherRoute = TeacherRouteImport.update({
   id: '/teacher',
   path: '/teacher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterIndexRoute = RegisterIndexRouteImport.update({
@@ -83,9 +95,11 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/reviews': typeof ReviewsRoute
   '/subscribe': typeof SubscribeRoute
   '/teacher': typeof TeacherRoute
+  '/terms': typeof TermsRoute
   '/register/child': typeof RegisterChildRoute
   '/register/': typeof RegisterIndexRoute
   '/api/public/backend/$': typeof ApiPublicBackendSplatRoute
@@ -96,9 +110,11 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/reviews': typeof ReviewsRoute
   '/subscribe': typeof SubscribeRoute
   '/teacher': typeof TeacherRoute
+  '/terms': typeof TermsRoute
   '/register/child': typeof RegisterChildRoute
   '/register': typeof RegisterIndexRoute
   '/api/public/backend/$': typeof ApiPublicBackendSplatRoute
@@ -110,9 +126,11 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/reviews': typeof ReviewsRoute
   '/subscribe': typeof SubscribeRoute
   '/teacher': typeof TeacherRoute
+  '/terms': typeof TermsRoute
   '/register/child': typeof RegisterChildRoute
   '/register/': typeof RegisterIndexRoute
   '/api/public/backend/$': typeof ApiPublicBackendSplatRoute
@@ -125,9 +143,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/login'
+    | '/privacy'
     | '/reviews'
     | '/subscribe'
     | '/teacher'
+    | '/terms'
     | '/register/child'
     | '/register/'
     | '/api/public/backend/$'
@@ -138,9 +158,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/login'
+    | '/privacy'
     | '/reviews'
     | '/subscribe'
     | '/teacher'
+    | '/terms'
     | '/register/child'
     | '/register'
     | '/api/public/backend/$'
@@ -151,9 +173,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/login'
+    | '/privacy'
     | '/reviews'
     | '/subscribe'
     | '/teacher'
+    | '/terms'
     | '/register/child'
     | '/register/'
     | '/api/public/backend/$'
@@ -165,9 +189,11 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   FaqRoute: typeof FaqRoute
   LoginRoute: typeof LoginRoute
+  PrivacyRoute: typeof PrivacyRoute
   ReviewsRoute: typeof ReviewsRoute
   SubscribeRoute: typeof SubscribeRoute
   TeacherRoute: typeof TeacherRoute
+  TermsRoute: typeof TermsRoute
   RegisterChildRoute: typeof RegisterChildRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   ApiPublicBackendSplatRoute: typeof ApiPublicBackendSplatRoute
@@ -210,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -229,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/teacher'
       fullPath: '/teacher'
       preLoaderRoute: typeof TeacherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register/': {
@@ -261,9 +301,11 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   FaqRoute: FaqRoute,
   LoginRoute: LoginRoute,
+  PrivacyRoute: PrivacyRoute,
   ReviewsRoute: ReviewsRoute,
   SubscribeRoute: SubscribeRoute,
   TeacherRoute: TeacherRoute,
+  TermsRoute: TermsRoute,
   RegisterChildRoute: RegisterChildRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   ApiPublicBackendSplatRoute: ApiPublicBackendSplatRoute,
