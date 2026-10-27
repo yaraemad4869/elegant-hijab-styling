@@ -1,14 +1,16 @@
-# Welcome to your Lovable project
+# Elegant Hijab Styling
+
+خلي الام والنوتة شعرهم مش باينمن الحجاب .. بالنسبة للاسعار ضيف خانة عشان الادمن يكتب السعر بالدولار مع السعر بالريال .. footer يبقى باللون الكحلي ويبقى شكله شبه كده .. في الاباقة ال vip كلمة الافضل في مربع لونه تركوازي .. خلي لونه برتقالي نفس الدرجة المستخدمة في البروجكت
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/afabed93-f2c7-4a82-9319-c5bf6bccafef).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +22,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
