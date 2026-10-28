@@ -2,13 +2,14 @@ import { useNavigate } from '../router-compat'
 import { ArrowLeft, ArrowRight, Check, ClipboardCheck, Headphones, ShieldCheck, Sparkles } from 'lucide-react'
 import { useApp } from '../context'
 import { packageIcon } from '../data'
+import { hasRealOriginalPrice, usdAmount } from '../price'
 import heroFamily from '../../assets/siraj-hero-family.jpg'
 import teacherSession from '../../assets/siraj-teacher-session.jpg'
 
 export default function Landing() {
   const { t, dir, language, setSelectedPackageId, currentUser, siteContent } = useApp()
   const navigate = useNavigate()
-  const { packages: allPackages, familyDiscounts, programs, features, stats, hero } = siteContent
+  const { packages: allPackages, familyDiscounts, programs, features, stats, hero, testimonials } = siteContent
   const packages = allPackages.filter(pkg => pkg.active !== false)
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight
 
@@ -29,7 +30,7 @@ export default function Landing() {
           </div>
 
           <div className="order-1 text-center lg:order-2 lg:text-start">
-            <span className="section-kicker">{t('نورٌ وعلمٌ من أي مكان', 'Light and learning, anywhere')}</span>
+            <span className="font-display text-4xl font-black text-primary md:text-5xl">{t('سِراج', 'SIRAJ ACADEMY')}</span>
             <h1 className="mt-5 text-4xl font-black leading-[1.25] text-foreground md:text-6xl">
               {t('رحلة تبدأ بآية...', 'A journey begins with a verse...')}
               <span className="mt-1 block text-primary">{t('وتنتهي بقلبٍ معلّق بالقرآن.', 'and grows into a lifelong love of Quran.')}</span>
@@ -127,10 +128,22 @@ export default function Landing() {
                     </div>
                   </div>
                   <div className="mt-7 border-b border-border pb-7">
-                    {pkg.originalPrice && <p className="text-sm text-muted-foreground line-through">{pkg.originalPrice} {t('ريال', 'SAR')}</p>}
-                    <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary">{pkg.price}</strong><span className="pb-1 text-sm text-muted-foreground">{t('ريال / شهر', 'SAR / month')}</span></div>
+                    {hasRealOriginalPrice(pkg) && (
+                      <p className="text-sm text-muted-foreground line-through">
+                        {language === 'en' && pkg.priceUsd != null ? `$ ${usdAmount(pkg.originalPrice ?? pkg.price, pkg) ?? pkg.priceUsd}` : `${pkg.originalPrice} ${t('ريال', 'SAR')}`}
+                      </p>
+                    )}
+                    {language === 'en' && pkg.priceUsd != null ? (
+                      <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary" dir="ltr">$ {pkg.priceUsd}</strong><span className="pb-1 text-sm text-muted-foreground">{t('دولار / شهر', 'USD / month')}</span></div>
+                    ) : (
+                      <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary">{pkg.price}</strong><span className="pb-1 text-sm text-muted-foreground">{t('ريال / شهر', 'SAR / month')}</span></div>
+                    )}
                     {pkg.priceUsd != null && (
-                      <p className="mt-1 text-sm text-muted-foreground">{t('أو', 'or')} <strong className="text-foreground" dir="ltr">$ {pkg.priceUsd}</strong> {t('دولار / شهر', 'USD / month')}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {language === 'en'
+                          ? <>or <strong className="text-foreground">{pkg.price} SAR</strong> / month</>
+                          : <>{t('أو', 'or')} <strong className="text-foreground" dir="ltr">$ {pkg.priceUsd}</strong> {t('دولار / شهر', 'USD / month')}</>}
+                      </p>
                     )}
 
                     <p className="mt-2 text-sm font-semibold text-foreground">{pkg.sessions} {t('حصة شهرياً', 'sessions monthly')}</p>
@@ -175,6 +188,30 @@ export default function Landing() {
                   <span className="font-bold text-foreground">{language === 'ar' ? discount.labelAr : discount.labelEn}</span>
                   <strong className="text-primary">{discount.discount > 0 ? `${discount.discount}%` : t('السعر كامل', 'Full price')}</strong>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {testimonials.length > 0 && (
+        <section id="reviews" className="px-5 py-20 md:px-8 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="section-kicker">{t('آراء طلابنا', 'Testimonials')}</span>
+              <h2 className="section-title mt-4">{t('قصص نجاح مع سِراج', 'Success stories with Siraj')}</h2>
+              <p className="mt-4 leading-8 text-muted-foreground">{t('آراء أولياء الأمور والطلاب الذين بدأوا رحلتهم معنا.', 'What parents and students say about their journey with us.')}</p>
+            </div>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {testimonials.slice(0, 3).map(item => (
+                <article key={item.id} className="feature-card">
+                  <div className="flex gap-1 text-lg text-accent" aria-label={`${item.rating}/5`}>{'★'.repeat(Math.max(1, Math.min(5, item.rating)))}</div>
+                  <p className="mt-4 text-sm leading-7 text-foreground">{language === 'ar' ? `«${item.textAr}»` : `"${item.textEn}"`}</p>
+                  <div className="mt-5 border-t border-border pt-4">
+                    <p className="text-sm font-bold text-foreground">{language === 'ar' ? item.nameAr : item.nameEn}</p>
+                    <p className="text-xs text-muted-foreground">{item.country}</p>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
