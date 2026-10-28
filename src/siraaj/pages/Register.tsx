@@ -3,7 +3,7 @@ import { Link, useNavigate } from '../router-compat'
 import { User, Phone, Lock, Eye, EyeOff, ArrowRight, ArrowLeft, GraduationCap, Users } from 'lucide-react'
 import { useApp } from '../context'
 import type { UserRole } from '../types'
-import sirajLogo from '../../assets/siraj-logo-icon-only.jpeg'
+import sirajLogo from '../../assets/siraj-logo-transparent.png'
 
 export default function Register() {
   const { registerUser, t, dir, language, selectedPackageId } = useApp()

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { useApp } from '../context'
 import { DEFAULT_SITE_CONTENT, packageIcon } from '../data'
+import { hasRealOriginalPrice } from '../price'
 import type { Package, /*Testimonial, */Program, Feature, Stat, /*FamilyDiscount,*/ Teacher, HeroSettings } from '../types'
 
 type Tab = 'overview' | 'students' | 'teachers' | 'packages' | 'content' | 'settings'
@@ -603,7 +604,7 @@ export default function AdminDashboard() {
                     <div className="flex items-baseline gap-1 mb-3">
                       <span className="font-display text-2xl font-bold gold-text">{pkg.price}</span>
                       <span className="text-muted-foreground text-xs">{t('ر/شهر', 'SAR/mo')}</span>
-                      {pkg.originalPrice && <span className="text-muted-foreground text-xs line-through ms-1">{pkg.originalPrice}</span>}
+                      {hasRealOriginalPrice(pkg) && <span className="text-muted-foreground text-xs line-through ms-1">{pkg.originalPrice}</span>}
                     </div>
                     <p className="text-xs text-muted-foreground mb-3">{pkg.sessions} {t('حصة شهرياً', 'sessions/month')}</p>
                     <ul className="space-y-1.5">

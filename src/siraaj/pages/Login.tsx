@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from '../router-compat'
 import { Phone, Lock, Eye, EyeOff, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useApp } from '../context'
-import sirajLogo from '../../assets/siraj-logo-icon-only.jpeg'
+import sirajLogo from '../../assets/siraj-logo-transparent.png'
 
 export default function Login() {
   const { login, t, dir, language, selectedPackageId } = useApp()

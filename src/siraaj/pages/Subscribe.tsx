@@ -3,6 +3,7 @@ import { useNavigate } from '../router-compat'
 import { Check, Tag, CreditCard, Smartphone, Globe, ArrowLeft, ArrowRight, CheckCircle, X } from 'lucide-react'
 import { useApp } from '../context'
 import { DAYS, TIMES, packageIcon } from '../data'
+import { usdAmount } from '../price'
 import type { PaymentMethod } from '../types'
 
 export default function Subscribe() {
@@ -133,9 +134,18 @@ export default function Subscribe() {
             style={{ background: 'rgba(244,91,6,0.08)', border: '1px solid rgba(244,91,6,0.2)' }}
           >
             <p className="text-muted-foreground">{t('المبلغ المدفوع', 'Amount Paid')}</p>
-            <p className="font-display text-2xl font-bold gold-text">{finalPrice} {t('ريال/شهر', 'SAR/month')}</p>
-            {pkg.priceUsd != null && pkg.price > 0 && (
-              <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ $ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+            {language === 'en' && pkg.priceUsd != null && pkg.price > 0 ? (
+              <>
+                <p className="font-display text-2xl font-bold gold-text" dir="ltr">$ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+                <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ {finalPrice} {t('ريال/شهر', 'SAR/month')}</p>
+              </>
+            ) : (
+              <>
+                <p className="font-display text-2xl font-bold gold-text">{finalPrice} {t('ريال/شهر', 'SAR/month')}</p>
+                {pkg.priceUsd != null && pkg.price > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ $ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+                )}
+              </>
             )}
 
           </div>
@@ -230,9 +240,15 @@ export default function Subscribe() {
                           </p>
                         </div>
                       </div>
-                      <p className="font-display text-2xl font-bold gold-text mb-3">
-                        {item.price} {t('ريال', 'SAR')}
-                        {item.priceUsd != null && <span className="text-sm font-semibold text-muted-foreground" dir="ltr"> ≈ ${item.priceUsd}</span>}
+                      <p className="font-display text-2xl font-bold gold-text mb-3" dir={language === 'en' && item.priceUsd != null ? 'ltr' : undefined}>
+                        {language === 'en' && item.priceUsd != null ? (
+                          <>
+                            $ {item.priceUsd}
+                            <span className="text-sm font-semibold text-muted-foreground"> ≈ {item.price} {t('ريال', 'SAR')}</span>
+                          </>
+                        ) : (
+                          <>{item.price} {t('ريال', 'SAR')}</>
+                        )}
                       </p>
 
                       <ul className="flex flex-col gap-1.5">
@@ -523,6 +539,9 @@ export default function Subscribe() {
                           <p className="font-bold">{siteContent.hero.instapayName}</p>
                           <p className="text-muted-foreground mt-2">{t('المبلغ:', 'Amount:')}</p>
                           <p className="font-display font-bold text-2xl gold-text">{finalPrice} {t('ريال', 'SAR')}</p>
+                          {language === 'en' && pkg.priceUsd != null && pkg.price > 0 && (
+                            <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ $ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+                          )}
                         </div>
                         <p className="text-xs text-muted-foreground">
                           {t('بعد التحويل، أرسل إيصال التحويل على واتساب: +20 100 000 0000', 'After transfer, send receipt via WhatsApp: +20 100 000 0000')}
@@ -543,6 +562,9 @@ export default function Subscribe() {
                         >
                           <p className="text-muted-foreground">{t('المبلغ الإجمالي:', 'Total Amount:')}</p>
                           <p className="font-display font-bold text-2xl gold-text">{finalPrice} {t('ريال', 'SAR')}</p>
+                          {language === 'en' && pkg.priceUsd != null && pkg.price > 0 && (
+                            <p className="text-xs text-muted-foreground mt-1" dir="ltr">≈ $ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</p>
+                          )}
                         </div>
                       </div>
                     )}
@@ -695,7 +717,9 @@ export default function Subscribe() {
               <div className="flex flex-col gap-2 text-sm border-t pt-4" style={{ borderColor: 'var(--border)' }}>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t('سعر الباقة', 'Package price')}</span>
-                  <span>{pkg.price} {t('ر', 'SAR')}</span>
+                  <span dir={language === 'en' && pkg.priceUsd != null ? 'ltr' : undefined}>
+                    {language === 'en' && pkg.priceUsd != null ? `$ ${usdAmount(pkg.price, pkg) ?? pkg.priceUsd}` : `${pkg.price} ${t('ر', 'SAR')}`}
+                  </span>
                 </div>
                 {familyDiscount > 0 && (
                   <div className="flex justify-between text-emerald-light">
@@ -714,12 +738,23 @@ export default function Subscribe() {
                   style={{ borderColor: 'var(--border)' }}
                 >
                   <span>{t('الإجمالي', 'Total')}</span>
-                  <span className="gold-text font-display text-xl">{finalPrice} {t('ر', 'SAR')}</span>
+                  <span className="gold-text font-display text-xl" dir={language === 'en' && pkg.priceUsd != null ? 'ltr' : undefined}>
+                    {language === 'en' && pkg.priceUsd != null ? `$ ${Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}` : `${finalPrice} ${t('ر', 'SAR')}`}
+                  </span>
                 </div>
                 {pkg.priceUsd != null && pkg.price > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{t('الإجمالي بالدولار', 'Total in USD')}</span>
-                    <span dir="ltr" className="font-semibold">$ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</span>
+                    {language === 'en' ? (
+                      <>
+                        <span className="text-muted-foreground">{t('الإجمالي بالريال', 'Total in SAR')}</span>
+                        <span dir="ltr" className="font-semibold">{finalPrice} SAR</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-muted-foreground">{t('الإجمالي بالدولار', 'Total in USD')}</span>
+                        <span dir="ltr" className="font-semibold">$ {Math.round((finalPrice / pkg.price) * pkg.priceUsd * 100) / 100}</span>
+                      </>
+                    )}
                   </div>
                 )}
                 <p className="text-xs text-muted-foreground text-center">{t('شهرياً', 'per month')}</p>

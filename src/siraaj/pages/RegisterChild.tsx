@@ -3,7 +3,7 @@ import { useNavigate } from '../router-compat'
 import { User, ArrowLeft, ArrowRight, Check } from 'lucide-react'
 import { useApp } from '../context'
 import { LEVELS } from '../data'
-import sirajLogo from '../../assets/siraj-logo-icon-only.jpeg'
+import sirajLogo from '../../assets/siraj-logo-transparent.png'
 
 export default function RegisterChild() {
   const { t, dir, language, setSelectedPackageId, setSubscriptionState, currentUser, siteContent } = useApp()
