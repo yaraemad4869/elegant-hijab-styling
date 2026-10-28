@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 import { Link } from '../router-compat'
 import { useApp } from '../context'
-import sirajLogo from '../../assets/siraj-logo-icon-only.jpeg'
+import BrandLockup from './BrandLockup'
 
 function TikTokIcon() {
     return (
@@ -47,10 +47,14 @@ export default function Footer() {
         <footer dir={dir} id="contact" className="site-footer">
             <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
                 <div className="grid gap-12 md:grid-cols-3">
-                    {/* تابعنا */}
+                    {/* الهوية ووسائل التواصل */}
                     <div>
-                        <h4 className="footer-heading">{t('تابعنا', 'Follow Us')}</h4>
-                        <div className="mt-6 flex flex-wrap gap-3">
+                        <BrandLockup size="footer" />
+                        <p className="footer-muted mt-5 max-w-sm text-sm leading-7">
+                            {t('أكاديمية متخصصة في تعليم القرآن الكريم وعلومه أونلاين — معلمون متخصصون، جداول مرنة، ومتابعة مستمرة.', 'A specialized online Quran academy — expert teachers, flexible schedules, and continuous support.')}
+                        </p>
+                        <h4 className="footer-heading mt-7">{t('تابعنا', 'Follow Us')}</h4>
+                        <div className="mt-4 flex flex-wrap gap-3">
                             {socials.map(s => (
                                 <a key={s.label} href="#" aria-label={s.label} className="footer-social" style={{ background: s.bg }}>
                                     {s.icon}
@@ -70,16 +74,16 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="footer-link">
+                                <Link to="/privacy" className="footer-link">
                                     <span>{t('سياسة الخصوصية', 'Privacy Policy')}</span>
                                     <Chevron size={14} />
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="footer-link">
+                                <Link to="/terms" className="footer-link">
                                     <span>{t('الشروط والأحكام', 'Terms & Conditions')}</span>
                                     <Chevron size={14} />
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -101,6 +105,12 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li>
+                                <Link to="/reviews" className="footer-link">
+                                    <span>{t('نماذج مشرفة', 'Featured Stories')}</span>
+                                    <Chevron size={14} />
+                                </Link>
+                            </li>
+                            <li>
                                 <Link to="/register" className="footer-link">
                                     <span>{t('سجّل الآن', 'Register Now')}</span>
                                     <Chevron size={14} />
@@ -116,24 +126,8 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* الهوية */}
-                <div className="mt-14 flex flex-col items-center text-center">
-                    <img
-                        src={sirajLogo}
-                        alt="شعار أكاديمية سراج"
-                        className="w-20 h-20 rounded-2xl object-contain p-1.5"
-                        style={{ background: '#FFFFFF' }}
-                    />
-                    <p className="footer-tagline mt-4 text-2xl">
-                        {t('معنا نورٌ يضيء دروب المتعلمين', "With us, a light illuminates every learner's path")}
-                    </p>
-                    <p className="footer-muted mt-3 max-w-lg text-sm leading-7">
-                        {t('أكاديمية متخصصة في تعليم القرآن الكريم وعلومه أونلاين — معلمون متخصصون، جداول مرنة، ومتابعة مستمرة.', 'A specialized online Quran academy — expert teachers, flexible schedules, and continuous support.')}
-                    </p>
-                </div>
-
-                <div className="footer-divider footer-muted mt-10 pt-6 text-center text-xs">
-                    <p>{t('© ٢٠٢٥ أكاديمية سراج. جميع الحقوق محفوظة.', '© 2025 Siraj Academy. All rights reserved.')}</p>
+                <div className="footer-divider footer-muted mt-12 pt-6 text-center text-xs">
+                    <p>{t('© ٢٠٢٦ أكاديمية سراج. جميع الحقوق محفوظة.', '© 2026 Siraj Academy. All rights reserved.')}</p>
                 </div>
             </div>
         </footer>

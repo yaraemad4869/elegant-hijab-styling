@@ -43,6 +43,11 @@ export default function Landing() {
                 {t('ابدأ رحلتك الآن', 'Start your journey')}<Arrow size={18} />
               </button>
               <a href="#packages" className="btn-outline inline-flex min-h-14 items-center justify-center px-7 text-base">{t('استكشف الباقات', 'Explore packages')}</a>
+              {!currentUser && (
+                <button onClick={() => navigate('/login')} className="btn-outline inline-flex min-h-14 items-center justify-center px-7 text-base">
+                  {t('تسجيل الدخول', 'Sign in')}
+                </button>
+              )}
             </div>
             <div className="mt-9 grid grid-cols-3 gap-2 border-t border-border pt-6">
               {stats.slice(0, 3).map(stat => (
@@ -130,20 +135,13 @@ export default function Landing() {
                   <div className="mt-7 border-b border-border pb-7">
                     {hasRealOriginalPrice(pkg) && (
                       <p className="text-sm text-muted-foreground line-through">
-                        {language === 'en' && pkg.priceUsd != null ? `$ ${usdAmount(pkg.originalPrice ?? pkg.price, pkg) ?? pkg.priceUsd}` : `${pkg.originalPrice} ${t('ريال', 'SAR')}`}
+                        {language === 'en' ? `$ ${usdAmount(pkg.originalPrice ?? pkg.price, pkg)}` : `${pkg.originalPrice} ${t('ريال', 'SAR')}`}
                       </p>
                     )}
-                    {language === 'en' && pkg.priceUsd != null ? (
-                      <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary" dir="ltr">$ {pkg.priceUsd}</strong><span className="pb-1 text-sm text-muted-foreground">{t('دولار / شهر', 'USD / month')}</span></div>
+                    {language === 'en' ? (
+                      <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary" dir="ltr">$ {usdAmount(pkg.price, pkg)}</strong><span className="pb-1 text-sm text-muted-foreground">{t('دولار / شهر', 'USD / month')}</span></div>
                     ) : (
                       <div className="mt-1 flex items-end gap-2"><strong className="text-4xl font-black text-primary">{pkg.price}</strong><span className="pb-1 text-sm text-muted-foreground">{t('ريال / شهر', 'SAR / month')}</span></div>
-                    )}
-                    {pkg.priceUsd != null && (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {language === 'en'
-                          ? <>or <strong className="text-foreground">{pkg.price} SAR</strong> / month</>
-                          : <>{t('أو', 'or')} <strong className="text-foreground" dir="ltr">$ {pkg.priceUsd}</strong> {t('دولار / شهر', 'USD / month')}</>}
-                      </p>
                     )}
 
                     <p className="mt-2 text-sm font-semibold text-foreground">{pkg.sessions} {t('حصة شهرياً', 'sessions monthly')}</p>
@@ -213,6 +211,11 @@ export default function Landing() {
                   </div>
                 </article>
               ))}
+            </div>
+            <div className="mt-9 text-center">
+              <button onClick={() => navigate('/reviews')} className="btn-outline inline-flex min-h-12 items-center justify-center gap-2 px-6">
+                {t('شاهد النماذج المشرفة', 'See featured stories')}<Arrow size={17} />
+              </button>
             </div>
           </div>
         </section>

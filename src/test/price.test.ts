@@ -36,7 +36,8 @@ describe('usdAmount — التحويل للدولار', () => {
     expect(usdAmount(180, pkg({ priceUsd: 96 }))).toBe(48)
   })
 
-  it('يرجع null إذا كانت الباقة بدون سعر بالدولار', () => {
-    expect(usdAmount(360, pkg({ priceUsd: undefined }))).toBeNull()
+  it('يستخدم نسبة الريال إلى الدولار إذا لم يحدد المدير سعراً بالدولار', () => {
+    expect(usdAmount(360, pkg({ priceUsd: undefined }))).toBe(96)
+    expect(usdAmount(180, pkg({ priceUsd: undefined }))).toBe(48)
   })
 })

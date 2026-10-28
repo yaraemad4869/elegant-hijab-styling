@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from '../router-compat'
 import { Menu, X, Globe, LogOut, LayoutDashboard } from 'lucide-react'
 import { useApp } from '../context'
-import sirajLogo from '../../assets/siraj-logo-icon-only.jpeg'
+import BrandLockup from './BrandLockup'
 
 export default function Navbar() {
   const { currentUser, language, setLanguage, logout, t, dir } = useApp()
@@ -31,9 +31,7 @@ export default function Navbar() {
 
   const pageLinks = [
     { label: t('الأسئلة الشائعة', 'FAQ'), to: '/faq' },
-    ...(currentUser?.role === 'admin'
-      ? [{ label: t('آراء طلابنا', 'Reviews'), to: '/reviews' }]
-      : []),
+    { label: t('نماذج مشرفة', 'Featured Stories'), to: '/reviews' },
   ]
 
   return (
@@ -44,12 +42,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex h-20 items-center justify-between">
           {/* Logo - made much bigger */}
-          <Link to="/" className="flex items-center group flex-shrink-0">
-            <img
-              src={sirajLogo}
-              alt="شعار أكاديمية سراج"
-              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-            />
+          <Link
+            to="/"
+            aria-label="سِراج | SIRAJ ACADEMY"
+            className="flex items-center group flex-shrink-0 transition-transform duration-300 hover:scale-[1.02]"
+          >
+            <BrandLockup />
           </Link>
 
           {/* Desktop Nav - with bigger font */}
