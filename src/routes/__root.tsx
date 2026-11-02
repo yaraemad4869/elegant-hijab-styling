@@ -7,7 +7,7 @@ import {
     HeadContent,
     Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { AppProvider, useApp } from "../siraaj/context";
@@ -89,6 +89,15 @@ function SiteLayout() {
     const hideFooter = ["/login", "/register", "/subscribe"].some((p) =>
         pathname.startsWith(p),
     );
+
+    useEffect(() => {
+        // The page must always open at the very top: never restore a previous
+        // scroll position or jump to an anchor left over in the URL.
+        if ("scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    }, []);
 
     return (
         <div dir={dir} className="min-h-screen flex flex-col">

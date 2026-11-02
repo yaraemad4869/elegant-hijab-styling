@@ -45,7 +45,13 @@ export default function Footer() {
 
     return (
         <footer dir={dir} id="contact" className="site-footer">
-            <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
+            <div className="footer-wave" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path d="M0 0h1440v10c-260 56-560 62-820 34C400 21 180 12 0 10Z" fill="var(--background)" />
+                </svg>
+            </div>
+            <div className="site-footer-panel">
+                <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
                 <div className="grid gap-12 md:grid-cols-3">
                     {/* الهوية ووسائل التواصل */}
                     <div>
