@@ -133,8 +133,9 @@ export default function Landing() {
               <p className="mt-4 leading-8 text-muted-foreground">{t('جميع الباقات تمنحك نفس الجودة التعليمية والمتابعة المستمرة.', 'Every plan includes the same teaching quality and continuous support.')}</p>
             </div>
             <div className={`mt-12 grid items-stretch gap-6 ${packages.length >= 3 ? 'lg:grid-cols-3' : packages.length === 2 ? 'mx-auto max-w-4xl md:grid-cols-2' : 'mx-auto max-w-md'}`}>
-              {packages.map(pkg => (
-                <article key={pkg.id} className={`package-card ${pkg.highlight ? 'package-card-featured' : ''}`}>
+              {packages.map((pkg, pkgIndex) => (
+                <Reveal key={pkg.id} delay={pkgIndex * 90}>
+                <article className={`package-card ${pkg.highlight ? 'package-card-featured' : ''}`}>
                   {pkg.badge && <span className="package-badge">{language === 'ar' ? pkg.badge.ar : pkg.badge.en}</span>}
                   <div className="flex items-center gap-3">
                     <div className="program-icon text-xl">{packageIcon(pkg)}</div>
@@ -164,6 +165,7 @@ export default function Landing() {
                   </ul>
                   <button onClick={() => handleSubscribe(pkg.id)} className={pkg.highlight ? 'btn-accent min-h-12 w-full px-5' : 'btn-outline min-h-12 w-full px-5'}>{t('اختر هذه الباقة', 'Choose this plan')}</button>
                 </article>
+                </Reveal>
               ))}
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -184,6 +186,7 @@ export default function Landing() {
 
       {familyDiscounts.length > 0 && (
         <section id="family" className="px-5 py-20 md:px-8 md:py-28">
+          <Reveal>
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[.9fr_1.1fr]">
             <div>
               <span className="section-kicker">{t('للعائلات', 'For families')}</span>
@@ -201,11 +204,13 @@ export default function Landing() {
               ))}
             </div>
           </div>
+          </Reveal>
         </section>
       )}
 
       {testimonials.length > 0 && (
         <section id="reviews" className="px-5 py-20 md:px-8 md:py-28">
+          <Reveal>
           <div className="mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <span className="section-kicker">{t('آراء طلابنا', 'Testimonials')}</span>
@@ -230,10 +235,12 @@ export default function Landing() {
               </button>
             </div>
           </div>
+          </Reveal>
         </section>
       )}
 
       <section id="referral" className="final-cta px-5 py-20 md:px-8 md:py-24">
+          <Reveal>
         <div className="mx-auto max-w-5xl text-center">
           <span className="section-kicker section-kicker-light">{t('ابدأ اليوم', 'Start today')}</span>
           <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-black leading-tight text-primary-foreground md:text-5xl">{language === 'ar' ? hero.taglineAr : hero.taglineEn}</h2>
@@ -243,6 +250,7 @@ export default function Landing() {
             <a href="#packages" className="btn-dark-outline min-h-14 px-8">{t('عرض الباقات', 'View packages')}</a>
           </div>
         </div>
+          </Reveal>
       </section>
     </div>
   )
