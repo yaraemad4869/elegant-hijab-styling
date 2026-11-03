@@ -136,6 +136,7 @@ export default function Footer() {
                     <p>{t('© ٢٠٢٦ أكاديمية سراج. جميع الحقوق محفوظة.', '© 2026 Siraj Academy. All rights reserved.')}</p>
                 </div>
             </div>
+            </div>
         </footer>
     )
 }
