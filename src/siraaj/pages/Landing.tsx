@@ -69,6 +69,7 @@ export default function Landing() {
 
       {features.length > 0 && (
         <section className="section-band px-5 py-20 md:px-8 md:py-28">
+          <Reveal>
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
               <div>
@@ -93,11 +94,13 @@ export default function Landing() {
               ))}
             </div>
           </div>
+          </Reveal>
         </section>
       )}
 
       {programs.length > 0 && (
         <section className="px-5 py-20 md:px-8 md:py-28">
+          <Reveal>
           <div className="mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <span className="section-kicker">{t('ماذا نقدم؟', 'What we offer')}</span>
@@ -116,11 +119,13 @@ export default function Landing() {
               ))}
             </div>
           </div>
+          </Reveal>
         </section>
       )}
 
       {packages.length > 0 && (
         <section id="packages" className="packages-band px-5 py-20 md:px-8 md:py-28">
+          <Reveal>
           <div className="mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <span className="section-kicker">{t('الباقات', 'Packages')}</span>
@@ -173,6 +178,7 @@ export default function Landing() {
               })}
             </div>
           </div>
+          </Reveal>
         </section>
       )}
 
