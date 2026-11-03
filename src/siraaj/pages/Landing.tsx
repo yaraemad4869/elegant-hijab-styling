@@ -5,6 +5,7 @@ import { packageIcon } from '../data'
 import { hasRealOriginalPrice, usdAmount } from '../price'
 import heroFamily from '../../assets/siraj-hero-family.jpg'
 import teacherSession from '../../assets/siraj-teacher-session.jpg'
+import Reveal from '../components/Reveal'
 
 export default function Landing() {
   const { t, dir, language, setSelectedPackageId, currentUser, siteContent } = useApp()
@@ -21,15 +22,19 @@ export default function Landing() {
   return (
     <div dir={dir} className="min-h-screen bg-background">
       <section className="home-hero overflow-hidden px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-36">
+        <p className="bismillah">{t('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 'In the name of Allah, the Most Gracious, the Most Merciful')}</p>
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
           <div className="order-2 lg:order-1">
+            <Reveal>
             <div className="hero-image-shell">
               <img src={heroFamily} alt={t('أم وطفلتها تتعلمان القرآن عبر الإنترنت', 'A mother and daughter learning Quran online')} width={1408} height={1008} className="aspect-[7/5] w-full object-cover" />
               <div className="hero-image-tag"><Sparkles size={16} />{t('تعليم مباشر وتفاعلي', 'Live, interactive learning')}</div>
             </div>
+            </Reveal>
           </div>
 
           <div className="order-1 text-center lg:order-2 lg:text-start">
+            <Reveal>
             <span className="font-display text-4xl font-black text-primary md:text-5xl">{t('سِراج', 'SIRAJ ACADEMY')}</span>
             <h1 className="mt-5 text-4xl font-black leading-[1.25] text-foreground md:text-6xl">
               {t('رحلة تبدأ بآية...', 'A journey begins with a verse...')}
@@ -57,6 +62,7 @@ export default function Landing() {
                 </div>
               ))}
             </div>
+            </Reveal>
           </div>
         </div>
       </section>
