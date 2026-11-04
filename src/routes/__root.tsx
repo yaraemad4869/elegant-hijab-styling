@@ -90,15 +90,6 @@ function SiteLayout() {
         pathname.startsWith(p),
     );
 
-    useEffect(() => {
-        // The page must always open at the very top: never restore a previous
-        // scroll position or jump to an anchor left over in the URL.
-        if ("scrollRestoration" in window.history) {
-            window.history.scrollRestoration = "manual";
-        }
-        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    }, []);
-
     return (
         <div dir={dir} className="min-h-screen flex flex-col">
             <Navbar />
