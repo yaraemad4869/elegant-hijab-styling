@@ -129,6 +129,7 @@ function SiteLayout() {
     }, []);
 
     return (
+        <div dir={dir} className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-1">
                 {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
