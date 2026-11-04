@@ -1255,6 +1255,19 @@ select option {
     transform: scaleX(-1);
 }
 
+/* ── حركات الظهور عند التمرير (scroll reveal) ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
 /* توهج ناعم لصورة الهيرو */
 @keyframes heroFloat {
     0%,
