@@ -27,6 +27,22 @@ async function proxy(request: Request, splat: string | undefined) {
 
     try {
         const upstream = await fetch(target, { method, headers, body });
+        // أخطاء الخادم الداخلي (5xx) من الـ backend الخارجي بنحوّلها لاستجابة
+        // سليمة (success:false) عشان الواجهة تستخدم القيم الافتراضية ومايتسجلش
+        // 500 في التليمتري. أخطاء 4xx بتتمرر زي ما هي.
+        if (upstream.status >= 500) {
+            console.error(
+                `[backend-proxy] upstream ${upstream.status} on ${method} ${target}: ${await upstream.text().catch(() => "")}`,
+            );
+            return Response.json(
+                {
+                    success: false,
+                    statusCode: upstream.status,
+                    message: "تعذّر الاتصال بالخادم",
+                },
+                { status: 200 },
+            );
+        }
         const responseHeaders = new Headers();
         const contentType = upstream.headers.get("content-type");
         if (contentType) responseHeaders.set("content-type", contentType);
@@ -34,10 +50,11 @@ async function proxy(request: Request, splat: string | undefined) {
             status: upstream.status,
             headers: responseHeaders,
         });
-    } catch {
+    } catch (error) {
+        console.error(`[backend-proxy] network error on ${method} ${target}:`, error);
         return Response.json(
             { success: false, message: "تعذّر الاتصال بالخادم" },
-            { status: 502 },
+            { status: 200 },
         );
     }
 }
