@@ -30,6 +30,18 @@ async function proxy(request: Request, splat: string | undefined) {
         // أخطاء الخادم الداخلي (5xx) من الـ backend الخارجي بنحوّلها لاستجابة
         // سليمة (success:false) عشان الواجهة تستخدم القيم الافتراضية ومايتسجلش
         // 500 في التليمتري. أخطاء 4xx بتتمرر زي ما هي.
+        // /family-discounts و /features مش موجودين في الـ backend أصلاً
+        // (بيرجعوا 404) — نرجّعهم success:false عشان الواجهة تستخدم قيم
+        // افتراضية ومايظهرش خطأ في الكونسول. باقي الـ 404 بتتمرر زي ما هي.
+        if (
+            upstream.status === 404 &&
+            /^(family-discounts|features)(\/|$)/.test(splat ?? "")
+        ) {
+            return Response.json(
+                { success: false, message: "غير متوفر حالياً" },
+                { status: 200 },
+            );
+        }
         if (upstream.status >= 500) {
             console.error(
                 `[backend-proxy] upstream ${upstream.status} on ${method} ${target}: ${await upstream.text().catch(() => "")}`,

@@ -90,13 +90,42 @@ function SiteLayout() {
         pathname.startsWith(p),
     );
 
+    // استرجاع آخر مكان سكرول عند عمل reload لنفس الصفحة (وليس أول فتح —
+    // الجلسة الجديدة تبدأ من فوق). نحفظ المكان ونتركبه بعد ما المحتوى يتحمّل.
     useEffect(() => {
-        // The page must always open at the very top: never restore a previous
-        // scroll position or jump to an anchor left over in the URL.
-        if ("scrollRestoration" in window.history) {
-            window.history.scrollRestoration = "manual";
-        }
-        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+        const key = `siraj_scroll_${pathname}`;
+        let y = 0;
+        try {
+            y = parseInt(sessionStorage.getItem(key) || "0", 10) || 0;
+        } catch { /* ignore */ }
+        const restore = () => {
+            if (y > 0) window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
+        };
+        restore();
+        const t1 = setTimeout(restore, 500);
+        const t2 = setTimeout(restore, 1500);
+        return () => { clearTimeout(t1); clearTimeout(t2); };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const onScroll = () => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                try {
+                    sessionStorage.setItem(
+                        `siraj_scroll_${window.location.pathname}`,
+                        String(window.scrollY),
+                    );
+                } catch { /* ignore */ }
+            }, 150);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            if (timer) clearTimeout(timer);
+        };
     }, []);
 
     return (
