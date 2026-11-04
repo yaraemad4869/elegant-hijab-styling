@@ -7,7 +7,7 @@ import {
     HeadContent,
     Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { AppProvider, useApp } from "../siraaj/context";
@@ -90,8 +90,45 @@ function SiteLayout() {
         pathname.startsWith(p),
     );
 
+    // استرجاع آخر مكان سكرول عند عمل reload لنفس الصفحة (وليس أول فتح —
+    // الجلسة الجديدة تبدأ من فوق). نحفظ المكان ونتركبه بعد ما المحتوى يتحمّل.
+    useEffect(() => {
+        const key = `siraj_scroll_${pathname}`;
+        let y = 0;
+        try {
+            y = parseInt(sessionStorage.getItem(key) || "0", 10) || 0;
+        } catch { /* ignore */ }
+        const restore = () => {
+            if (y > 0) window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
+        };
+        restore();
+        const t1 = setTimeout(restore, 500);
+        const t2 = setTimeout(restore, 1500);
+        return () => { clearTimeout(t1); clearTimeout(t2); };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const onScroll = () => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                try {
+                    sessionStorage.setItem(
+                        `siraj_scroll_${window.location.pathname}`,
+                        String(window.scrollY),
+                    );
+                } catch { /* ignore */ }
+            }, 150);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            if (timer) clearTimeout(timer);
+        };
+    }, []);
+
     return (
-        <div dir={dir} className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-1">
                 {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
