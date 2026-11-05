@@ -1305,3 +1305,143 @@ select option {
     transform: translateY(-6px);
     box-shadow: 0 18px 40px color-mix(in oklab, var(--primary) 16%, transparent);
 }
+
+/* ── زخارف إسلامية متحركة ناعمة (زجاجية) ── */
+@keyframes spinSlow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatSoft {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-16px);
+    }
+}
+
+@keyframes glowPulse {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.75;
+        transform: scale(1.08);
+    }
+}
+
+.decor-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.decor-layer svg {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.1;
+}
+
+.decor-star {
+    position: absolute;
+    opacity: 0.16;
+    animation: spinSlow 80s linear infinite;
+}
+
+.decor-star-a {
+    top: -6%;
+    inset-inline-end: -4%;
+    width: clamp(180px, 26vw, 320px);
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.decor-star-b {
+    bottom: 8%;
+    inset-inline-start: -6%;
+    width: clamp(120px, 18vw, 220px);
+    height: auto;
+    aspect-ratio: 1;
+    opacity: 0.12;
+    animation-duration: 110s;
+    animation-direction: reverse;
+}
+
+.decor-char {
+    position: absolute;
+    color: var(--accent);
+    opacity: 0.5;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    animation: floatSoft 9s ease-in-out infinite;
+    text-shadow: 0 0 22px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.decor-char-a {
+    top: 18%;
+    inset-inline-start: 12%;
+}
+
+.decor-char-b {
+    bottom: 14%;
+    inset-inline-end: 14%;
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    opacity: 0.35;
+    color: var(--primary);
+    animation-delay: 2.2s;
+}
+
+.decor-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    animation: glowPulse 9s ease-in-out infinite;
+}
+
+.decor-glow-a {
+    top: -10%;
+    inset-inline-start: -8%;
+    width: 26rem;
+    height: 26rem;
+    background: color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+.decor-glow-b {
+    bottom: -12%;
+    inset-inline-end: -6%;
+    width: 22rem;
+    height: 22rem;
+    background: color-mix(in oklab, var(--accent) 16%, transparent);
+    animation-delay: 3s;
+}
+
+/* نسخة فاتحة للأقسام الداكنة */
+.decor-light svg {
+    stroke: var(--primary-foreground);
+}
+
+.decor-light .decor-star {
+    opacity: 0.2;
+}
+
+.decor-light .decor-char-a {
+    color: var(--surface-aqua-strong);
+}
+
+.decor-light .decor-char-b {
+    color: var(--primary-foreground);
+}
+
+.decor-light .decor-glow-a {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
+}
+
+.decor-light .decor-glow-b {
+    background: color-mix(in oklab, var(--accent) 22%, transparent);
+}
