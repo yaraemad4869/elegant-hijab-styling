@@ -6,6 +6,7 @@ import { hasRealOriginalPrice, usdAmount } from '../price'
 import heroFamily from '../../assets/siraj-hero-family.jpg'
 import teacherSession from '../../assets/siraj-teacher-session.jpg'
 import Reveal from '../components/Reveal'
+import IslamicDecor from '../components/IslamicDecor'
 
 export default function Landing() {
   const { t, dir, language, setSelectedPackageId, currentUser, siteContent } = useApp()
@@ -22,7 +23,7 @@ export default function Landing() {
   return (
     <div dir={dir} className="min-h-screen bg-background">
       <section className="home-hero overflow-hidden px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-36">
-        <p className="bismillah">{t('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 'In the name of Allah, the Most Gracious, the Most Merciful')}</p>
+        <IslamicDecor />
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
           <div className="order-2 lg:order-1">
             <Reveal>
@@ -41,7 +42,7 @@ export default function Landing() {
               <span className="mt-1 block text-primary">{t('وتنتهي بقلبٍ معلّق بالقرآن.', 'and grows into a lifelong love of Quran.')}</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg lg:mx-0">
-              {language === 'ar' ? hero.titleAr : hero.titleEn}. {language === 'ar' ? hero.subtitleAr : hero.subtitleEn}
+              {language === 'ar' ? hero.titleAr : hero.titleEn}
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
               <button onClick={() => navigate('/register')} className="btn-accent inline-flex min-h-14 items-center justify-center gap-2 px-7 text-base">
@@ -239,7 +240,8 @@ export default function Landing() {
         </section>
       )}
 
-      <section id="referral" className="final-cta px-5 py-20 md:px-8 md:py-24">
+      <section id="referral" className="final-cta overflow-hidden px-5 py-20 md:px-8 md:py-24">
+          <IslamicDecor tone="light" />
           <Reveal>
         <div className="mx-auto max-w-5xl text-center">
           <span className="section-kicker section-kicker-light">{t('ابدأ اليوم', 'Start today')}</span>

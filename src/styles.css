@@ -807,7 +807,7 @@ select option {
     position: relative;
     overflow: hidden;
     border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
-    border-radius: 1.5rem;
+    border-radius: 2rem;
     box-shadow: var(--shadow-soft);
 }
 
@@ -866,15 +866,16 @@ select option {
 .package-card,
 .program-card,
 .family-table {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: color-mix(in oklab, var(--card) 76%, transparent);
+    border: 1px solid color-mix(in oklab, var(--primary) 16%, var(--border));
     box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px) saturate(140%);
 }
 
 .feature-card {
     min-height: 15rem;
     padding: 1.6rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .feature-icon,
@@ -895,7 +896,7 @@ select option {
     align-items: flex-start;
     gap: 1.25rem;
     padding: 1.75rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     transition: transform 180ms ease, border-color 180ms ease;
 }
 
@@ -910,7 +911,7 @@ select option {
     min-height: 34rem;
     flex-direction: column;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .package-card-featured {
@@ -950,7 +951,7 @@ select option {
 
 .family-table {
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .family-row {
@@ -978,7 +979,7 @@ select option {
 .btn-accent,
 .btn-light,
 .btn-dark-outline {
-    border-radius: 0.55rem;
+    border-radius: 999px;
     font-family: var(--font-body);
     font-weight: 900;
     transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -1014,7 +1015,7 @@ select option {
 .btn-primary {
     background: var(--primary);
     color: var(--primary-foreground);
-    border-radius: 0.55rem;
+    border-radius: 999px;
 }
 
 .btn-primary:hover {
@@ -1024,7 +1025,7 @@ select option {
 .btn-outline {
     border-color: var(--primary);
     color: var(--primary);
-    border-radius: 0.55rem;
+    border-radius: 999px;
 }
 
 .btn-outline:hover {
@@ -1182,43 +1183,53 @@ select option {
     background-size: 84px 84px;
 }
 
-.home-hero {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2344C3C6' stroke-opacity='0.08'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>"), linear-gradient(180deg, var(--surface-aqua) 0%, var(--background) 100%);
-    background-size: 84px 84px, 100% 100%;
+/* أقسام بخلفية زخارف متحركة خلف محتوى زجاجي */
+.home-hero,
+.section-band,
+.packages-band,
+.final-cta {
+    position: relative;
+}
+
+.home-hero > *,
+.section-band > *,
+.packages-band > *,
+.final-cta > * {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes patternDrift {
+    to {
+        background-position: 168px 168px;
+    }
+}
+
+.home-hero::before,
+.section-band::before,
+.packages-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2344C3C6' stroke-opacity='0.10'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>");
+    background-size: 84px 84px;
+    mask-image: radial-gradient(130% 100% at 50% 0%, black 35%, transparent 95%);
+    animation: patternDrift 50s linear infinite;
 }
 
 .final-cta {
     background-color: var(--foreground);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%23FFFFFF' stroke-opacity='0.05'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>");
     background-size: 84px 84px;
+    animation: patternDrift 50s linear infinite;
 }
 
 .bismillah {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.1rem;
-    margin: 0 auto 2.75rem;
-    max-width: 60rem;
-    color: var(--primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.6vw, 2rem);
-    font-weight: 700;
-    text-align: center;
+    display: none;
 }
 
-.bismillah::before,
-.bismillah::after {
-    content: '';
-    flex: 0 1 7rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary));
-    opacity: 0.55;
-}
-
-.bismillah::after {
-    transform: scaleX(-1);
-}
 
 .section-kicker {
     letter-spacing: 0.5px;
@@ -1293,4 +1304,144 @@ select option {
 .package-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 18px 40px color-mix(in oklab, var(--primary) 16%, transparent);
+}
+
+/* ── زخارف إسلامية متحركة ناعمة (زجاجية) ── */
+@keyframes spinSlow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatSoft {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-16px);
+    }
+}
+
+@keyframes glowPulse {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.75;
+        transform: scale(1.08);
+    }
+}
+
+.decor-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.decor-layer svg {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.1;
+}
+
+.decor-star {
+    position: absolute;
+    opacity: 0.16;
+    animation: spinSlow 80s linear infinite;
+}
+
+.decor-star-a {
+    top: -6%;
+    inset-inline-end: -4%;
+    width: clamp(180px, 26vw, 320px);
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.decor-star-b {
+    bottom: 8%;
+    inset-inline-start: -6%;
+    width: clamp(120px, 18vw, 220px);
+    height: auto;
+    aspect-ratio: 1;
+    opacity: 0.12;
+    animation-duration: 110s;
+    animation-direction: reverse;
+}
+
+.decor-char {
+    position: absolute;
+    color: var(--accent);
+    opacity: 0.5;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    animation: floatSoft 9s ease-in-out infinite;
+    text-shadow: 0 0 22px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.decor-char-a {
+    top: 18%;
+    inset-inline-start: 12%;
+}
+
+.decor-char-b {
+    bottom: 14%;
+    inset-inline-end: 14%;
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    opacity: 0.35;
+    color: var(--primary);
+    animation-delay: 2.2s;
+}
+
+.decor-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    animation: glowPulse 9s ease-in-out infinite;
+}
+
+.decor-glow-a {
+    top: -10%;
+    inset-inline-start: -8%;
+    width: 26rem;
+    height: 26rem;
+    background: color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+.decor-glow-b {
+    bottom: -12%;
+    inset-inline-end: -6%;
+    width: 22rem;
+    height: 22rem;
+    background: color-mix(in oklab, var(--accent) 16%, transparent);
+    animation-delay: 3s;
+}
+
+/* نسخة فاتحة للأقسام الداكنة */
+.decor-light svg {
+    stroke: var(--primary-foreground);
+}
+
+.decor-light .decor-star {
+    opacity: 0.2;
+}
+
+.decor-light .decor-char-a {
+    color: var(--surface-aqua-strong);
+}
+
+.decor-light .decor-char-b {
+    color: var(--primary-foreground);
+}
+
+.decor-light .decor-glow-a {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
+}
+
+.decor-light .decor-glow-b {
+    background: color-mix(in oklab, var(--accent) 22%, transparent);
 }
