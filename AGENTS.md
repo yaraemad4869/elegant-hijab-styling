@@ -16,3 +16,5 @@
 - Package cards show one price unless a real discount exists: `hasRealOriginalPrice` hides any `originalPrice` that is not greater than the discounted price.
 - Brand accent is the project orange `#F45B06` (`--accent`); package badges use it, teal `#44C3C6` (`--primary`) stays the primary color.
 - The footer stays navy: a dark `#0b1622` outer frame (`.site-footer`) with a curved top wave and an inner rounded navy panel (`#132439`, `.site-footer-panel` in `src/styles.css`) — do not revert to the white footer.
+- Scroll restoration is manual: `scrollRestoration: false` in `src/router.tsx` (its built-in option resets scroll to top mid-session) with a sessionStorage per-route save/restore in `SiteLayout` (src/routes/__root.tsx) — reload returns to the last scroll position, a fresh session opens at the top.
+- The backend proxy (src/routes/api/public/backend/$.ts) converts upstream 5xx to a 200 `success:false` envelope and softens 404 on `/family-discounts` and `/features` (endpoints absent from the external backend) so the UI falls back to defaults without 500 telemetry or console errors.
