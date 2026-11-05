@@ -8,7 +8,7 @@ export const getRouter = () => {
     const router = createRouter({
         routeTree,
         context: { queryClient },
-        scrollRestoration: true,
+        scrollRestoration: false, // نستخدم استرجاعاً يدوياً عبر sessionStorage في __root.tsx
         defaultPreloadStaleTime: 0,
     });
 
