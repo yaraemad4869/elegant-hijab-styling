@@ -807,7 +807,7 @@ select option {
     position: relative;
     overflow: hidden;
     border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
-    border-radius: 1.5rem;
+    border-radius: 2rem;
     box-shadow: var(--shadow-soft);
 }
 
@@ -866,15 +866,16 @@ select option {
 .package-card,
 .program-card,
 .family-table {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: color-mix(in oklab, var(--card) 76%, transparent);
+    border: 1px solid color-mix(in oklab, var(--primary) 16%, var(--border));
     box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px) saturate(140%);
 }
 
 .feature-card {
     min-height: 15rem;
     padding: 1.6rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .feature-icon,
@@ -895,7 +896,7 @@ select option {
     align-items: flex-start;
     gap: 1.25rem;
     padding: 1.75rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     transition: transform 180ms ease, border-color 180ms ease;
 }
 
@@ -910,7 +911,7 @@ select option {
     min-height: 34rem;
     flex-direction: column;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .package-card-featured {
@@ -950,7 +951,7 @@ select option {
 
 .family-table {
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
 }
 
 .family-row {
@@ -978,7 +979,7 @@ select option {
 .btn-accent,
 .btn-light,
 .btn-dark-outline {
-    border-radius: 0.55rem;
+    border-radius: 999px;
     font-family: var(--font-body);
     font-weight: 900;
     transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -1014,7 +1015,7 @@ select option {
 .btn-primary {
     background: var(--primary);
     color: var(--primary-foreground);
-    border-radius: 0.55rem;
+    border-radius: 999px;
 }
 
 .btn-primary:hover {
@@ -1024,7 +1025,7 @@ select option {
 .btn-outline {
     border-color: var(--primary);
     color: var(--primary);
-    border-radius: 0.55rem;
+    border-radius: 999px;
 }
 
 .btn-outline:hover {
@@ -1182,43 +1183,53 @@ select option {
     background-size: 84px 84px;
 }
 
-.home-hero {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2344C3C6' stroke-opacity='0.08'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>"), linear-gradient(180deg, var(--surface-aqua) 0%, var(--background) 100%);
-    background-size: 84px 84px, 100% 100%;
+/* أقسام بخلفية زخارف متحركة خلف محتوى زجاجي */
+.home-hero,
+.section-band,
+.packages-band,
+.final-cta {
+    position: relative;
+}
+
+.home-hero > *,
+.section-band > *,
+.packages-band > *,
+.final-cta > * {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes patternDrift {
+    to {
+        background-position: 168px 168px;
+    }
+}
+
+.home-hero::before,
+.section-band::before,
+.packages-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2344C3C6' stroke-opacity='0.10'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>");
+    background-size: 84px 84px;
+    mask-image: radial-gradient(130% 100% at 50% 0%, black 35%, transparent 95%);
+    animation: patternDrift 50s linear infinite;
 }
 
 .final-cta {
     background-color: var(--foreground);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%23FFFFFF' stroke-opacity='0.05'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>");
     background-size: 84px 84px;
+    animation: patternDrift 50s linear infinite;
 }
 
 .bismillah {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.1rem;
-    margin: 0 auto 2.75rem;
-    max-width: 60rem;
-    color: var(--primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.6vw, 2rem);
-    font-weight: 700;
-    text-align: center;
+    display: none;
 }
 
-.bismillah::before,
-.bismillah::after {
-    content: '';
-    flex: 0 1 7rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary));
-    opacity: 0.55;
-}
-
-.bismillah::after {
-    transform: scaleX(-1);
-}
 
 .section-kicker {
     letter-spacing: 0.5px;
