@@ -1226,11 +1226,6 @@ select option {
     animation: patternDrift 50s linear infinite;
 }
 
-.bismillah {
-    display: none;
-}
-
-
 .section-kicker {
     letter-spacing: 0.5px;
 }
