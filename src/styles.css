@@ -1081,18 +1081,20 @@ select option {
     position: relative;
     overflow: hidden;
     border-radius: 2.5rem;
-    background:
-        radial-gradient(ellipse at 50% 0%, rgba(68, 195, 198, 0.14), transparent 55%),
-        #132439;
+    background: #132439;
 }
 
-/* زخرفة إسلامية خفيفة على خلفية الفوتر */
+/* علامة إسلامية واحدة بدلاً من الزخارف المتكررة في خلفية الفوتر */
 .site-footer-panel::before {
     position: absolute;
-    inset: 0;
-    content: '';
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%23FFFFFF' stroke-opacity='0.06'><path d='M42 8l9 9-9 9-9-9z'/><path d='M42 58l9 9-9 9-9-9z'/><path d='M8 42l9-9 9 9-9 9z'/><path d='M58 42l9-9 9 9-9 9z'/><circle cx='42' cy='42' r='7'/><path d='M42 33v18M33 42h18'/></g></svg>");
-    background-size: 84px 84px;
+    top: 1.25rem;
+    inset-inline-start: 50%;
+    content: '۞';
+    color: var(--primary);
+    font-size: 2rem;
+    line-height: 1;
+    opacity: 0.35;
+    transform: translateX(-50%);
     pointer-events: none;
 }
 
@@ -1109,6 +1111,7 @@ select option {
 
 .site-footer-panel > div {
     position: relative;
+    z-index: 1;
 }
 
 .footer-heading {
